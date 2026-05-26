@@ -1,0 +1,61 @@
+{
+    "_comment_top": "DockStream JSON template for the DiffPROTACs evaluator. Copy this file, edit the FIVE fields marked with TODO_FILL_IN, and pass it via --docking_config to evaluate.py. See https://github.com/MolecularAI/DockStream for the full schema.",
+    "docking": {
+        "header": {
+            "logging": {
+                "logfile": "./docking_run.log"
+            }
+        },
+        "ligand_preparation": {
+            "embedding_pools": [
+                {
+                    "pool_id": "RDkit_pool",
+                    "type": "RDkit",
+                    "parameters": {
+                        "prefix_execution": "module load RDkit"
+                    },
+                    "input": {
+                        "standardize_smiles": false,
+                        "type": "console"
+                    }
+                }
+            ]
+        },
+        "docking_runs": [
+            {
+                "backend": "AutoDockVina",
+                "run_id": "AutoDockVina",
+                "input_pools": ["RDkit_pool"],
+                "parameters": {
+                    "_TODO_FILL_IN_1_binary_location": "Replace with absolute path to AutoDock Vina binary directory, e.g. /home/<you>/DockStream-master-master/DockStreamCommunity/autodock_vina_1_1_2_linux_x86/bin",
+                    "binary_location": "TODO_FILL_IN/autodock_vina/bin",
+
+                    "parallelization": {"number_cores": 8},
+                    "seed": 42,
+
+                    "_TODO_FILL_IN_2_receptor": "Replace with absolute path to your target receptor PDBQT file (the protein you want PROTAC ligands to bind).",
+                    "receptor_pdbqt_path": ["TODO_FILL_IN/your_receptor.pdbqt"],
+
+                    "number_poses": 2,
+
+                    "_TODO_FILL_IN_3_search_space": "Set the docking box center & size in Angstroms. For PROTAC ligands the box should be large enough to enclose the entire ternary pocket (typical: 25-30 A on each side).",
+                    "search_space": {
+                        "--center_x": 0.0,
+                        "--center_y": 0.0,
+                        "--center_z": 0.0,
+                        "--size_x": 25,
+                        "--size_y": 25,
+                        "--size_z": 25
+                    },
+                    "local_only": false
+                },
+                "output": {
+                    "_TODO_FILL_IN_4_poses": "Output SDF for docked poses. The evaluator overwrites this per-call, but provide a sensible default.",
+                    "poses": {"poses_path": "./docked_poses.sdf"},
+                    "_TODO_FILL_IN_5_scores": "Output CSV for scores. Same note as above.",
+                    "scores": {"scores_path": "./docked_scores.csv"}
+                }
+            }
+        ]
+    }
+}

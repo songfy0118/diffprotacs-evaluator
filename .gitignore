@@ -1,0 +1,17 @@
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.ipynb_checkpoints/
+
+# Outputs / runs
+demo_data/demo_output/
+*.csv
+!demo_data/reference_smiles.txt
+docking_run.log
+docked_*.sdf
+docked_*.csv
+
+# Local environment
+.venv/
+.env
